@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                            [
                               '@babel/preset-env',
                               {
-                                 debug: true,
+                                 debug: DEBUG,
                                  useBuiltIns: 'usage',
                                  shippedProposals: true,
                                  corejs: 3,
@@ -167,7 +167,12 @@ module.exports = function(grunt) {
    grunt.registerTask('build-js', [ 'browserify', 'uglify' ]);
    grunt.registerTask('build-css', [ 'sass', 'postcss' ]);
    grunt.registerTask('build', [ 'build-js', 'build-css' ]);
-   grunt.registerTask('develop', [ 'build', 'watch' ]);
+   grunt.registerTask('develop', function() {
+      // Set debug flag globally
+      grunt.option('debug', true);
+      // Run the tasks
+      grunt.task.run([ 'build', 'watch' ]);
+   });
    grunt.registerTask('default', [ 'standards' ]);
 
 };
